@@ -1,6 +1,7 @@
 <template>
-    <v-container class="d-flex justify-center">
-      <v-card class="pa-4" max-width="400">
+    <v-container class="fill-height d-flex justify-center">
+      <v-alert v-if="message" type="info">{{ message }}</v-alert>
+      <v-card class="pa-4">
         <v-card-title class="headline">Connexion</v-card-title>
         <v-card-text>
           <v-form ref="loginForm" v-model="isValid">
@@ -29,6 +30,9 @@
           >
             {{ error }}
           </v-alert>
+          <p>Pas encore de compte ?
+            <router-link to="/register">Inscrivez-vous ici</router-link>
+          </p>
         </v-card-text>
         <v-card-actions>
           <v-btn
@@ -49,6 +53,7 @@
   export default {
     data() {
       return {
+        message: this.$route.query.message || '',
         email: '',
         password: '',
         error: null,
@@ -68,24 +73,30 @@
       togglePasswordVisibility() {
         this.showPassword = !this.showPassword;
       },
-      login() {
+      async login() {
         this.error = null;
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, this.email, this.password)
-          .then(() => {
-            this.$router.push('/');
-          })
-          .catch(err => {
-            this.error = 'Échec de la connexion : ' + err.message;
-          });
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+          const user = userCredential.user;
+
+          // Vérifier si l'email est vérifié
+          if (!user.emailVerified) {
+            throw new Error('Votre email n\'est pas vérifié. Veuillez vérifier votre boîte mail.');
+          }
+
+          // Rediriger vers la page d'accueil
+          this.$router.push('/');
+        } catch (err) {
+          // Afficher les messages d'erreur appropriés
+          this.error = err.message === 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).'
+            ? 'Identifiants invalides.'
+            : err.message;
+        }
       }
     }
   };
   </script>
  
   <style scoped>
-  .v-container {
-    min-height: 100vh;
-    align-items: center;
-  }
   </style>

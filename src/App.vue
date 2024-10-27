@@ -1,8 +1,8 @@
 <template>
-  <div>
-      <app-header></app-header>
-      <router-view></router-view>
-  </div>
+  <v-app>
+    <app-header></app-header>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
@@ -15,17 +15,15 @@ export default {
   },
   data () {
       return {
-
       }
   },
   methods: {
-
   }
 }
 </script>
 
 <style>
-body{
+body {
   margin: 0;
   font-family: 'Nunito SemiBold';
 }

@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import "@mdi/font/css/materialdesignicons.css";
 
 Vue.config.productionTip = false;
 
@@ -34,12 +35,20 @@ const router = new VueRouter({
   mode: "history",
 });
 
-Vue.config.productionTip = false;
-
 // Créer l'application Vue seulement après l'authentification
 let app;
-onAuthStateChanged(auth, () => {
+onAuthStateChanged(auth, (user) => {
   if (!app) {
+    if (user) {
+      if (!user.emailVerified) {
+        router.push("/Connexion");
+      } else {
+        router.push("/");
+      }
+    } else {
+      router.push("/Connexion");
+    }
+
     app = new Vue({
       router,
       vuetify: new Vuetify(),
