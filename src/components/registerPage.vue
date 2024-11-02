@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height d-flex justify-center">
+  <v-container class="fill-height justify-center">
     <v-card class="pa-4">
       <v-card-title class="headline">Inscription</v-card-title>
       <v-card-text>

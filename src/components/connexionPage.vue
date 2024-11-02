@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height d-flex justify-center">
+    <v-container class="fill-height justify-center">
       <v-alert v-if="message" type="info">{{ message }}</v-alert>
       <v-card class="pa-4">
         <v-card-title class="headline">Connexion</v-card-title>

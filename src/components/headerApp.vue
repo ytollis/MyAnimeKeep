@@ -2,14 +2,15 @@
     <v-app-bar color="rgb(53, 20, 220)">
         <v-spacer></v-spacer>
         <v-toolbar-title>
-            <router-link to="/" exact >TopAnimes</router-link>
+            <router-link to="/" exact >Top100Animes</router-link>
+            <router-link to="/SearchAnime" exact >AllAnime</router-link>
             <template v-if="!isAuthenticated">
                 <router-link to="/Connexion" exact >Connexion</router-link>
             </template>
             <template v-else>
                 <span class="user-info">
                     <router-link to="/Account" exact >
-                    <v-icon class="white--text" style="font-size: 30px; margin-top :-4%">mdi-account</v-icon>
+                    <v-icon class="white--text" style="font-size: 30px; margin-top :-2%">mdi-account</v-icon>
                     <span class="user-pseudo">{{ userDisplayName }}</span>
                     </router-link>
                 </span>
@@ -80,9 +81,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 a {
-    color: rgb(255, 255, 255) !important;;
+    color: rgb(255, 255, 255) !important;
     text-decoration: none;
     margin: 5px;
     padding: 12px;
